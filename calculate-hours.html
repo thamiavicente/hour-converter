@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert hour</title>
+</head>
+<body>
+    <input type="number"/> //tipo time?
+    <span>:</span>
+    <input type="number"/>
+    <button>+</button>
+    <span>ou</span>
+    <button>+</button>
+    <input type="number"/>
+    <span>:</span>
+    <input type="number"/>
+    <script>
+        function convertHour([...hours]) {
+            return [...hours].map(hour => {
+                let hourValue = parseInt(hour.split(':')[0])*60
+                let minuteValue = parseInt(hour.split(':')[1])
+                return hourValue + minuteValue
+            })
+        }
+
+        function convertMinute(minuteTotal) {
+            let hour = Math.floor(minuteTotal / 60)
+            let minute = minuteTotal % 60
+            if(minute === 0) minute = '00'
+            if(minute < 0) minute = minute * -1
+            return `${hour}:${minute}`
+        }
+
+        function sumHour([...hours]) {
+            let minutes = convertHour([...hours])
+            let result = 0
+            minutes.forEach(minute => {
+                result += minute
+            })
+            return convertMinute(result)
+        }
+
+        function subHour([...hours]) {
+            let minutes = convertHour([...hours])
+            let result = minutes[0]
+            minutes.forEach((minute, index) => {
+                if(index === 0) return
+                result -= minute
+            })
+            return convertMinute(result)
+        }
+
+        sumHour(['1:23', '1:23'])
+        subHour(['8:00', '4:27', '3:57'])
+    </script>
+</body>
+</html>
